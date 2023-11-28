@@ -12,15 +12,16 @@ user_input = st.text_input("Enter text:")
 
 # Create a button to trigger the prediction
 if st.button("Predict"):
-    # Preprocess the user input (similar to your training data preprocessing)
-    # Pass the preprocessed input through your XGBoost model for prediction
-    # Make sure to convert the input text into the format expected by your model (e.g., TF-IDF vectors)
-
+    preprocessed_input = preprocess_input(user_input)  # Replace with your actual preprocessing code
+    
+    # Create a DMatrix object from the preprocessed input data
+    dmatrix = xgb.DMatrix(preprocessed_input)
+    
     # Perform the prediction
-    prediction = model.predict([user_input])  # Replace with the actual prediction code
+    prediction = model.predict(dmatrix)[0]  # Get the prediction result (assuming binary classification)
 
     # Display the prediction result to the user
-    if prediction[0] == 3:
+    if prediction == 3:
         st.write("Cyberbullying Detected")
     else:
         st.write("No Cyberbullying Detected")
