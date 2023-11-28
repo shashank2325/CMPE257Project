@@ -34,8 +34,11 @@ if st.button("Predict"):
     # Preprocess the user input
     preprocessed_input = preprocess_input(user_input)
     
-    # Perform the prediction for multi-class classification
-    prediction = model.predict(preprocessed_input)  # Get the prediction result
+    # Ensure that preprocessed_input is a DMatrix object
+    dmatrix = xgb.DMatrix(preprocessed_input)  # Convert to a DMatrix object
+    
+    # Perform the prediction
+    prediction = model.predict(dmatrix)  # Get the prediction result
 
     # Map the predicted class labels to class names
     class_names = {
@@ -48,5 +51,5 @@ if st.button("Predict"):
     }
 
     # Display the predicted class name based on the prediction
-    predicted_class = class_names.get(prediction[0], "Unknown")
-    st.write("Predicted Cyberbullying Type:", predicted_class)
+    predicted_classes = [class_names.get(label, "Unknown") for label in prediction]
+    st.write("Predicted Cyberbullying Types:", predicted_classes)
