@@ -34,11 +34,8 @@ if st.button("Predict"):
     # Preprocess the user input
     preprocessed_input = preprocess_input(user_input)
     
-    # Create a DMatrix object from the preprocessed input data
-    dmatrix = xgb.DMatrix(preprocessed_input)
-    
     # Perform the prediction
-    prediction = model.predict(dmatrix)[0]  # Get the prediction result (assuming binary classification)
+    prediction = model.predict(preprocessed_input)[0]  # Get the prediction result (assuming binary classification)
 
     # Display the prediction result to the user
     if prediction == 1:
